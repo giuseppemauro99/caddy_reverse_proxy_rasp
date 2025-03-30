@@ -1,5 +1,5 @@
 services:
-  caddy:
+  caddy-reverse_proxy_rasp:
     image: caddy:2
     container_name: caddy
     command:
