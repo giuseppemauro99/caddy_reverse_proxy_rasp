@@ -1,0 +1,3 @@
+ciaosonoungattino.giuseppemauro.ovh {
+    reverse_proxy ciaosonoungattino-api-app:8390
+}
