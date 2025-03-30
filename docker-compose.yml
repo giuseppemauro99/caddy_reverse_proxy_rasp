@@ -1,21 +1,28 @@
 services:
-  caddy-reverseproxy: #reverse proxy per https
-    image: caddy:2.9.1
-    container_name: caddy-reverseproxy
+  caddy:
+    image: caddy:2
+    container_name: caddy
+    command:
+      - "caddy"
+      - "run"
+      - "--config"
+      - "/etc/caddy/Caddyfile"
+      - "--adapter"
+      - "caddyfile"
     ports:
       - "80:80"
-      - "443:443"
+      - "8395:8395"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
       - caddy_data:/data
       - caddy_config:/config
     networks:
-      - ciaosonoungattino-network
+      - caddy_net
+
+networks:
+  caddy_net:
+    driver: bridge
 
 volumes:
   caddy_data:
   caddy_config:
-
-networks:
-  ciaosonoungattino-network: #add network for each containet that must be served
-    driver: bridge
