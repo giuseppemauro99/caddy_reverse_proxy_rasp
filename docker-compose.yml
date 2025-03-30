@@ -17,10 +17,10 @@ services:
       - caddy_data:/data
       - caddy_config:/config
     networks:
-      - caddy_net
+      - ciaosonoungattino-network
 
 networks:
-  caddy_net:
+  ciaosonoungattino-network: #aggiungere la rete per ogni container da servire
     driver: bridge
 
 volumes:

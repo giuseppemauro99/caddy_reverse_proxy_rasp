@@ -1,3 +1,7 @@
 ciaosonoungattino.giuseppemauro.ovh {
+    tls your-email@example.com {
+        protocols tls1.2 tls1.3
+    }
+
     reverse_proxy ciaosonoungattino-api-app:8390
 }
