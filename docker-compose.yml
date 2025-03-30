@@ -1,7 +1,7 @@
 services:
   caddy-reverse_proxy_rasp:
     image: caddy:2
-    container_name: caddy
+    container_name: caddy-reverse_proxy_rasp
     command:
       - "caddy"
       - "run"
