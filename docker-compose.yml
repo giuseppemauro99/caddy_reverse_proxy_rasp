@@ -17,10 +17,10 @@ services:
       - caddy_data:/data
       - caddy_config:/config
     networks:
-      - ciaosonoungattino-network
+      - raspi_ig_publisher_ciaosonoungattino-network
 
 networks:
-  ciaosonoungattino-network: #aggiungere la rete per ogni container da servire
+  raspi_ig_publisher_ciaosonoungattino-network: #aggiungere la rete per ogni container da servire
     external: true
 
 volumes:
