@@ -21,7 +21,7 @@ services:
 
 networks:
   ciaosonoungattino-network: #aggiungere la rete per ogni container da servire
-    driver: bridge
+    external: true
 
 volumes:
   caddy_data:
