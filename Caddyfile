@@ -3,5 +3,13 @@ ciaosonoungattino.giuseppemauro.ovh {
         protocols tls1.2 tls1.3
     }
 
-    reverse_proxy ciaosonoungattino-api-app:8390
+    @robots {
+         path /robots.txt
+    }
+    handle @robots {
+         root * /usr/share/caddy
+         file_server
+    }
+    
+    reverse_proxy * ciaosonoungattino-api-app:8390
 }
