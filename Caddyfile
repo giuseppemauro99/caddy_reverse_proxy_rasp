@@ -1,4 +1,4 @@
-ciaosonoungattino.giuseppemauro.ovh {
+* {
     tls giuseppemauro99@gmail.com {
         protocols tls1.2 tls1.3
     }
@@ -11,5 +11,5 @@ ciaosonoungattino.giuseppemauro.ovh {
          file_server
     }
     
-    reverse_proxy * ciaosonoungattino-api-app:8390
+    reverse_proxy ciaosonoungattino-api-app:8390
 }
