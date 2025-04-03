@@ -84,7 +84,7 @@ spec:
       - name: caddy-static
         hostPath:
           path: /absolute/path/to/static  # Sostituisci con il percorso assoluto dei tuoi file statici sul nodo
-          type: Directory
+          type: DirectoryOrCreate
 ---
 apiVersion: v1
 kind: Service
