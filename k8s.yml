@@ -5,11 +5,40 @@ metadata:
   name: caddy-config
 data:
   Caddyfile: |
-    # Inserisci qui il contenuto del tuo Caddyfile
-    # Ad esempio:
-    # :80 {
-    #   reverse_proxy / http://app:8080
-    # }
+    # Blocco per i domini autorizzati
+    ciaosonoungattino.giuseppemauro.ovh, ciaosonoungattino.ovh {
+        tls giuseppemauro99@gmail.com {
+            protocols tls1.2 tls1.3
+        }
+
+        # Se la richiesta è per /robots.txt, servila dalla directory statica
+        @robots {
+            path /robots.txt
+        }
+        handle @robots {
+            root * /usr/share/caddy
+            file_server
+        }
+        
+        # Per tutte le altre richieste inoltra al backend
+        reverse_proxy ciaosonoungattino-api-app:8390
+    }
+
+    # Blocco fallback per ogni altro hostname
+    * {
+        # Gestione speciale per /robots.txt: servilo sempre
+        @robots {
+            path /robots.txt
+        }
+        handle @robots {
+            root * /usr/share/caddy
+            file_server
+        }
+
+        # Per tutte le altre richieste restituisci 404
+        respond "Not Found" 404
+    }
+
 ---
 apiVersion: apps/v1
 kind: Deployment
