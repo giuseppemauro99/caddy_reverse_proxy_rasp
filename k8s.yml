@@ -1,0 +1,76 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: caddy-config
+data:
+  Caddyfile: |
+    # Inserisci qui il contenuto del tuo Caddyfile
+    # Ad esempio:
+    # :80 {
+    #   reverse_proxy / http://app:8080
+    # }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: caddy-reverse-proxy-rasp
+  labels:
+    app: caddy-reverse-proxy-rasp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: caddy-reverse-proxy-rasp
+  template:
+    metadata:
+      labels:
+        app: caddy-reverse-proxy-rasp
+    spec:
+      containers:
+      - name: caddy
+        image: caddy:2
+        command: ["caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]
+        ports:
+        - containerPort: 80
+        - containerPort: 443
+        volumeMounts:
+        - name: caddy-config
+          mountPath: /etc/caddy/Caddyfile
+          subPath: Caddyfile
+        - name: caddy-data
+          mountPath: /data
+        - name: caddy-config-data
+          mountPath: /config
+        - name: caddy-static
+          mountPath: /usr/share/caddy
+      volumes:
+      - name: caddy-config
+        configMap:
+          name: caddy-config
+      - name: caddy-data
+        emptyDir: {}
+      - name: caddy-config-data
+        emptyDir: {}
+      - name: caddy-static
+        hostPath:
+          path: /absolute/path/to/static  # Sostituisci con il percorso assoluto dei tuoi file statici sul nodo
+          type: Directory
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: caddy-service
+spec:
+  selector:
+    app: caddy-reverse-proxy-rasp
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 80
+  - name: https
+    protocol: TCP
+    port: 443
+    targetPort: 443
+  type: ClusterIP
