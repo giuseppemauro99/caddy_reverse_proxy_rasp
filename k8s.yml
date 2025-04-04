@@ -1,8 +1,16 @@
 ---
+# Namespace per tutte le risorse
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ciaosonoungattino-namespace
+---
+# ConfigMap per il Caddyfile (Caddy fungerà da Ingress Controller)
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: caddy-config
+  namespace: ciaosonoungattino-namespace
 data:
   Caddyfile: |
     # Blocco per i domini autorizzati
@@ -21,7 +29,7 @@ data:
         }
         
         # Per tutte le altre richieste inoltra al backend
-        reverse_proxy ciaosonoungattino-api-app:8390
+        reverse_proxy ciaosonoungattino-ig-app.ciaosonoungattino-namespace.svc.cluster.local:8390
     }
 
     # Blocco fallback per ogni altro hostname
@@ -38,28 +46,29 @@ data:
         # Per tutte le altre richieste restituisci 404
         respond "Not Found" 404
     }
-
 ---
+# Deployment per Caddy (Ingress Controller)
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: caddy-reverse-proxy-rasp
+  name: caddy-ingress
+  namespace: ciaosonoungattino-namespace
   labels:
-    app: caddy-reverse-proxy-rasp
+    app: caddy-ingress
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: caddy-reverse-proxy-rasp
+      app: caddy-ingress
   template:
     metadata:
       labels:
-        app: caddy-reverse-proxy-rasp
+        app: caddy-ingress
     spec:
       containers:
       - name: caddy
         image: caddy:2
-        command: ["caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]
+        args: ["caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]
         ports:
         - containerPort: 80
         - containerPort: 443
@@ -67,39 +76,34 @@ spec:
         - name: caddy-config
           mountPath: /etc/caddy/Caddyfile
           subPath: Caddyfile
+        # Utilizza emptyDir per i dati temporanei (ad es. log, cache)
         - name: caddy-data
           mountPath: /data
-        - name: caddy-config-data
-          mountPath: /config
-        - name: caddy-static
-          mountPath: /usr/share/caddy
       volumes:
       - name: caddy-config
         configMap:
           name: caddy-config
       - name: caddy-data
         emptyDir: {}
-      - name: caddy-config-data
-        emptyDir: {}
-      - name: caddy-static
-        hostPath:
-          path: /absolute/path/to/static  # Sostituisci con il percorso assoluto dei tuoi file statici sul nodo
-          type: DirectoryOrCreate
 ---
+# Service per esporre Caddy (NodePort)
 apiVersion: v1
 kind: Service
 metadata:
   name: caddy-service
+  namespace: ciaosonoungattino-namespace
 spec:
+  type: NodePort
   selector:
-    app: caddy-reverse-proxy-rasp
+    app: caddy-ingress
   ports:
   - name: http
     protocol: TCP
     port: 80
     targetPort: 80
+    nodePort: 30080
   - name: https
     protocol: TCP
     port: 443
     targetPort: 443
-  type: ClusterIP
+    nodePort: 30443
