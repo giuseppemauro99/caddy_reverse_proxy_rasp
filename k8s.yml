@@ -1,4 +1,12 @@
 ---
+# IngressClass per Caddy (cluster-level)
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  name: caddy
+spec:
+  controller: caddy.ingress.k8s.io/controller
+---
 # ConfigMap per il Caddyfile (Caddy fungerà da Ingress Controller)
 apiVersion: v1
 kind: ConfigMap
@@ -36,10 +44,8 @@ data:
             root * /usr/share/caddy
             file_server
         }
-
         # Per tutte le altre richieste restituisci 404
         respond "Not Found" 404
-    }
 ---
 # Deployment per Caddy (Ingress Controller)
 apiVersion: apps/v1
