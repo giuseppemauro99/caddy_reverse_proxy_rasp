@@ -23,6 +23,8 @@ services:
 networks:
   raspi_ig_publisher_ciaosonoungattino-network: #aggiungere la rete per ogni container da servire
     external: true
+  vivosmart-coso-server-network:
+    external:: true
 
 volumes:
   caddy_data:

@@ -17,6 +17,24 @@ ciaosonoungattino.giuseppemauro.ovh, ciaosonoungattino.ovh {
     reverse_proxy ciaosonoungattino-api-app:8390
 }
 
+alfa.vivosmart.it {
+    tls giuseppemauro99@gmail.com {
+        protocols tls1.2 tls1.3
+    }
+
+    # Se la richiesta è per /robots.txt, servila dalla directory statica
+    @robots {
+         path /robots.txt
+    }
+    handle @robots {
+         root * /usr/share/caddy
+         file_server
+    }
+    
+    # Per tutte le altre richieste inoltra al backend
+    reverse_proxy vivosmart-coso-server-web:8082
+}
+
 # Blocco fallback per ogni altro hostname
 * {
     # Gestione speciale per /robots.txt: servilo sempre
