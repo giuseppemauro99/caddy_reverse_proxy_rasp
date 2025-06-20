@@ -32,7 +32,7 @@ alfa.vivosmart.it {
     }
     
     # Per tutte le altre richieste inoltra al backend
-    reverse_proxy vivosmart-coso-server-web:8082
+    reverse_proxy vivosmart-coso-server-web:80 #Caddy usa la porta interna del container
 }
 
 # Blocco fallback per ogni altro hostname
