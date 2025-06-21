@@ -50,7 +50,7 @@ http://alfa.vivosmart.it {
 	@browserUA header_regexp UA "(?i)mozilla|chrome|safari|edge|opera|firefox"
 
 	# -- 2. browser ⇒ redirect 308 verso HTTPS  --
-	handle @browser {
+	handle @browserUA {
 		redir https://{host}{uri} 308
 	}
 
