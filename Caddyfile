@@ -18,7 +18,7 @@ ciaosonoungattino.giuseppemauro.ovh, ciaosonoungattino.ovh {
 }
 
 #  HTTPS (porta 443) - sito “normale”
-alfa.vivosmart.it {
+https://alfa.vivosmart.it {
 	# certificato automatico + hardening TLS
 	tls giuseppemauro99@gmail.com {
 		protocols tls1.2 tls1.3
