@@ -40,8 +40,6 @@ alfa.vivosmart.it {
 #  HTTP (porta 80): faccio redirect su https se si tratta di un browser
 # Se si tratta di una chiamata dal coso-client verso API la lascio in chiaro
 http://alfa.vivosmart.it {
-     auto_https off
-
      log {
           output stdout      # <-- il valore predefinito che ti ho proposto
           format console     # o "json"
