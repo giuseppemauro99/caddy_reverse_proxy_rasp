@@ -18,38 +18,38 @@ ciaosonoungattino.giuseppemauro.ovh, ciaosonoungattino.ovh {
 }
 
 #  HTTPS (porta 443) - sito “normale”
-https://alfa.vivosmart.it {
-	# certificato automatico + hardening TLS
+alfa.vivosmart.it {
 	tls giuseppemauro99@gmail.com {
 		protocols tls1.2 tls1.3
 	}
-
 	# /robots.txt statico
 	@robots path /robots.txt
 	handle @robots {
 		root * /usr/share/caddy
 		file_server
 	}
-
-	# resto del traffico
+	# tutto il traffico su HTTPS (da browser e da API)
 	reverse_proxy vivosmart-coso-server-web:80
 }
 
 #  HTTP (porta 80): faccio redirect su https se si tratta di un browser
 # Se si tratta di una chiamata dal coso-client verso API la lascio in chiaro
-http://alfa.vivosmart.it:80 {
+http://alfa.vivosmart.it {
+     auto_https off
 
 	# -- 1. matcher che “fiuta” i browser  --
 	# basato sullo User-Agent
 	@browserUA header_regexp UA "(?i)mozilla|chrome|safari|edge|opera|firefox"
 
 	# -- 2. browser ⇒ redirect 308 verso HTTPS  --
-	handle @browserUA {
+	handle @browser {
 		redir https://{host}{uri} 308
 	}
 
-	# 3. qualunque altra richiesta HTTP va al backend
-	reverse_proxy vivosmart-coso-server-web:80
+	# Tutto il resto (cioè i dispositivi)
+	handle {
+		reverse_proxy vivosmart-coso-server-web:80
+	}
 }
 
 # Blocco fallback per ogni altro hostname
