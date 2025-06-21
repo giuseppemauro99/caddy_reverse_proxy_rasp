@@ -20,11 +20,10 @@ ciaosonoungattino.giuseppemauro.ovh, ciaosonoungattino.ovh {
 #  HTTPS (porta 443) - sito “normale”
 alfa.vivosmart.it {
      log {
-          level  INFO              # o DEBUG
-          output file /var/log/caddy/iot.log
-          format single_field common_log
+          output stdout      # <-- il valore predefinito che ti ho proposto
+          format console     # o "json"
      }
-     
+
 	tls giuseppemauro99@gmail.com {
 		protocols tls1.2 tls1.3
 	}
@@ -44,9 +43,8 @@ http://alfa.vivosmart.it {
      auto_https off
 
      log {
-          level  INFO              # o DEBUG
-          output file /var/log/caddy/iot.log
-          format single_field common_log
+          output stdout      # <-- il valore predefinito che ti ho proposto
+          format console     # o "json"
      }
 
 	# -- 1. matcher che “fiuta” i browser  --
