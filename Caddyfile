@@ -40,14 +40,11 @@ alfa.vivosmart.it {
 http://alfa.vivosmart.it:80 {
 
 	# -- 1. matcher che “fiuta” i browser  --
-	#  basato sull header Accept (HTML)
-	@browserAccept header Accept *text/html*
-
-	# oppure se preferisci  basato sullo User-Agent
-	# @browserUA header_regexp UA "(?i)mozilla|chrome|safari|edge|opera|firefox"
+	# basato sullo User-Agent
+	@browserUA header_regexp UA "(?i)mozilla|chrome|safari|edge|opera|firefox"
 
 	# -- 2. browser ⇒ redirect 308 verso HTTPS  --
-	handle @browserAccept {
+	handle @browserUA {
 		redir https://{host}{uri} 308
 	}
 
