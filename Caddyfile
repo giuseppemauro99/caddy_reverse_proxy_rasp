@@ -17,22 +17,42 @@ ciaosonoungattino.giuseppemauro.ovh, ciaosonoungattino.ovh {
     reverse_proxy ciaosonoungattino-api-app:8390
 }
 
+#  HTTPS (porta 443) - sito “normale”
 alfa.vivosmart.it {
-    tls giuseppemauro99@gmail.com {
-        protocols tls1.2 tls1.3
-    }
+	# certificato automatico + hardening TLS
+	tls giuseppemauro99@gmail.com {
+		protocols tls1.2 tls1.3
+	}
 
-    # Se la richiesta è per /robots.txt, servila dalla directory statica
-    @robots {
-         path /robots.txt
-    }
-    handle @robots {
-         root * /usr/share/caddy
-         file_server
-    }
-    
-    # Per tutte le altre richieste inoltra al backend
-    reverse_proxy vivosmart-coso-server-web:80 #Caddy usa la porta interna del container
+	# /robots.txt statico
+	@robots path /robots.txt
+	handle @robots {
+		root * /usr/share/caddy
+		file_server
+	}
+
+	# resto del traffico
+	reverse_proxy vivosmart-coso-server-web:80
+}
+
+#  HTTP (porta 80): faccio redirect su https se si tratta di un browser
+# Se si tratta di una chiamata dal coso-client verso API la lascio in chiaro
+http://alfa.vivosmart.it:80 {
+
+	# -- 1. matcher che “fiuta” i browser  --
+	#  basato sull header Accept (HTML)
+	@browserAccept header Accept *text/html*
+
+	# oppure se preferisci  basato sullo User-Agent
+	# @browserUA header_regexp UA "(?i)mozilla|chrome|safari|edge|opera|firefox"
+
+	# -- 2. browser ⇒ redirect 308 verso HTTPS  --
+	handle @browserAccept {
+		redir https://{host}{uri} 308
+	}
+
+	# 3. qualunque altra richiesta HTTP va al backend
+	reverse_proxy vivosmart-coso-server-web:80
 }
 
 # Blocco fallback per ogni altro hostname
