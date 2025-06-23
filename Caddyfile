@@ -26,8 +26,10 @@ alfa.vivosmart.it {
 
      #Evito indicizzazione tratttandosi di un ambiente ALFA
      @robots path /robots.txt
-     respond "User-agent: *
-     Disallow: /" 200
+     handle @robots {
+          respond "User-agent: *
+          Disallow: /" 200
+     }
      header {
           X-Robots-Tag "noindex, nofollow"
      }
@@ -50,8 +52,10 @@ http://alfa.vivosmart.it {
 
      #Evito indicizzazione tratttandosi di un ambiente ALFA
      @robots path /robots.txt
-     respond "User-agent: *
-     Disallow: /" 200
+     handle @robots {
+          respond "User-agent: *
+          Disallow: /" 200
+     }
      header {
           X-Robots-Tag "noindex, nofollow"
      }
