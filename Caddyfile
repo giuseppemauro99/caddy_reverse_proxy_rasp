@@ -24,27 +24,23 @@ alfa.vivosmart.it {
           format console     # o "json"
      }
 
+     #Evito indicizzazione tratttandosi di un ambiente ALFA
+     @robots path /robots.txt
+     handle @robots {
+          respond "User-agent: *\nDisallow: /\n" 200 {
+               content_type text/plain
+          }
+     }
+     header {
+          X-Robots-Tag "noindex, nofollow"
+     }
+
 	tls giuseppemauro99@gmail.com {
 		protocols tls1.2 tls1.3
 	}
 
-     route {
-        @robots path /robots.txt
-        handle @robots {
-            respond "User-agent: *\nDisallow: /\n" 200 {
-                content_type text/plain
-            }
-        }
-
-        handle {
-            header {
-                X-Robots-Tag "noindex, nofollow"
-            }
-
-            # tutto il traffico su HTTPS (da browser e da API)
-	       reverse_proxy vivosmart-coso-server-web:80
-        }
-    }
+	# tutto il traffico su HTTPS (da browser e da API)
+	reverse_proxy vivosmart-coso-server-web:80
 }
 
 #  HTTP (porta 80): faccio redirect su https se si tratta di un browser
@@ -55,7 +51,7 @@ http://alfa.vivosmart.it {
           format console     # o "json"
      }
 
-     # Disabilito indicizzazione google
+     #Evito indicizzazione tratttandosi di un ambiente ALFA
      @robots path /robots.txt
      handle @robots {
           respond "User-agent: *\nDisallow: /\n" 200 {
@@ -84,13 +80,13 @@ http://alfa.vivosmart.it {
 # Blocco fallback per ogni altro hostname
 * {
     # Gestione speciale per /robots.txt: servilo sempre
-    @robots {
-         path /robots.txt
-    }
-    handle @robots {
-         root * /usr/share/caddy
-         file_server
-    }
+#     @robots {
+#          path /robots.txt
+#     }
+#     handle @robots {
+#          root * /usr/share/caddy
+#          file_server
+#     }
 
     # Per tutte le altre richieste restituisci 404
     respond "Not Found" 404
