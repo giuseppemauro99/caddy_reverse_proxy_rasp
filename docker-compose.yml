@@ -16,7 +16,7 @@ services:
       - ./Caddyfile:/etc/caddy/Caddyfile
       - caddy_data:/data
       - caddy_config:/config
-      - ./static:/usr/share/caddy
+      #- ./static:/usr/share/caddy
     networks:
       - raspi_ig_publisher_ciaosonoungattino-network
       - coso-server_vivosmart-coso-server-network
