@@ -78,13 +78,13 @@ http://alfa.vivosmart.it {
 # Blocco fallback per ogni altro hostname
 * {
     # Gestione speciale per /robots.txt: servilo sempre
-#     @robots {
-#          path /robots.txt
-#     }
-#     handle @robots {
-#          root * /usr/share/caddy
-#          file_server
-#     }
+    @robots {
+         path /robots.txt
+    }
+    handle @robots {
+         root * /usr/share/caddy
+         file_server
+    }
 
     # Per tutte le altre richieste restituisci 404
     respond "Not Found" 404
