@@ -38,12 +38,7 @@ alfa.vivosmart.it {
 	tls giuseppemauro99@gmail.com {
 		protocols tls1.2 tls1.3
 	}
-	# /robots.txt statico
-	@robots path /robots.txt
-	handle @robots {
-		root * /usr/share/caddy
-		file_server
-	}
+     
 	# tutto il traffico su HTTPS (da browser e da API)
 	reverse_proxy vivosmart-coso-server-web:80
 }
