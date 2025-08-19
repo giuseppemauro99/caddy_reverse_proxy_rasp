@@ -4,6 +4,17 @@ ciaosonoungattino.giuseppemauro.ovh, ciaosonoungattino.ovh {
         protocols tls1.2 tls1.3
     }
 
+    # Blocca accesso a .git e file sensibili
+    @forbidden {
+        path /.git*
+        path /.env
+        path /composer.lock
+        path /package-lock.json
+        path /*.pem
+        path /*.key
+    }
+    respond @forbidden 404
+
     # Se la richiesta è per /robots.txt, servila dalla directory statica
     @robots {
          path /robots.txt
@@ -23,6 +34,17 @@ alfa.vivosmart.it {
           output stdout      # <-- il valore predefinito che ti ho proposto
           format console     # o "json"
      }
+
+     # Blocca accesso a .git e file sensibili
+    @forbidden {
+        path /.git*
+        path /.env
+        path /composer.lock
+        path /package-lock.json
+        path /*.pem
+        path /*.key
+    }
+    respond @forbidden 404
 
      #Evito indicizzazione tratttandosi di un ambiente ALFA
      header {
@@ -44,6 +66,17 @@ http://alfa.vivosmart.it {
           output stdout      # <-- il valore predefinito che ti ho proposto
           format console     # o "json"
      }
+
+     # Blocca accesso a .git e file sensibili
+    @forbidden {
+        path /.git*
+        path /.env
+        path /composer.lock
+        path /package-lock.json
+        path /*.pem
+        path /*.key
+    }
+    respond @forbidden 404
 
      #Evito indicizzazione tratttandosi di un ambiente ALFA
      header {
@@ -67,6 +100,19 @@ http://alfa.vivosmart.it {
 
 # Blocco fallback per ogni altro hostname
 * {
+
+     # Blocca accesso a .git e file sensibili
+    @forbidden {
+        path /.git*
+        path /.env
+        path /composer.lock
+        path /package-lock.json
+        path /*.pem
+        path /*.key
+    }
+    respond @forbidden 404
+
+
     # Gestione speciale per /robots.txt: servilo sempre
     @robots {
          path /robots.txt
