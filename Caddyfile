@@ -127,7 +127,7 @@ test-valeriamattia3d.giuseppemauro.ovh {
 	}
 
 	# tutto il traffico su HTTPS (da browser e da API)
-	reverse_proxy valeriamattia3d-wordpress:8480
+	reverse_proxy valeriamattia3d-valeriamattia3d-wordpress-1:8480
 }
 
 # Blocco fallback per ogni altro hostname
