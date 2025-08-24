@@ -2,6 +2,7 @@ services:
   caddy-reverse_proxy_rasp:
     image: caddy:2
     container_name: caddy-reverse_proxy_rasp
+    restart: unless-stopped
     command:
       - "caddy"
       - "run"
@@ -20,11 +21,14 @@ services:
     networks:
       - raspi_ig_publisher_ciaosonoungattino-network
       - coso-server_vivosmart-coso-server-network
+      - valeriamattia3d_default
 
 networks:
   raspi_ig_publisher_ciaosonoungattino-network: #aggiungere la rete per ogni container da servire
     external: true
   coso-server_vivosmart-coso-server-network:
+    external: true
+  valeriamattia3d_default:
     external: true
 
 volumes:
