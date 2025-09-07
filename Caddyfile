@@ -16,7 +16,7 @@ sftp.giusepperasp.giuseppemauro.ovh {
     respond @forbidden 404
     
     # Per tutte le altre richieste inoltra al backend
-    reverse_proxy rasp_sftp:2222
+    reverse_proxy rasp_sftp:2022
 }
 
 ciaosonoungattino.giuseppemauro.ovh, ciaosonoungattino.ovh {
