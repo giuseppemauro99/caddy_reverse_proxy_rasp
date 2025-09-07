@@ -1,4 +1,24 @@
 # Blocco per i domini autorizzati
+ftp.giusepperasp.giuseppemauro.ovh{
+     tls giuseppemauro99@gmail.com {
+        protocols tls1.2 tls1.3
+    }
+
+    # Blocca accesso a .git e file sensibili
+    @forbidden {
+        path /.git*
+        path /.env
+        path /composer.lock
+        path /package-lock.json
+        path /*.pem
+        path /*.key
+    }
+    respond @forbidden 404
+    
+    # Per tutte le altre richieste inoltra al backend
+    reverse_proxy rasp_sftp:2222
+}
+
 ciaosonoungattino.giuseppemauro.ovh, ciaosonoungattino.ovh {
     tls giuseppemauro99@gmail.com {
         protocols tls1.2 tls1.3

@@ -22,6 +22,7 @@ services:
       - raspi_ig_publisher_ciaosonoungattino-network
       - coso-server_vivosmart-coso-server-network
       - valeriamattia3d_default
+      - raspi_ftp_for_backup_rasp_sftp-network
 
 networks:
   raspi_ig_publisher_ciaosonoungattino-network: #aggiungere la rete per ogni container da servire
@@ -29,6 +30,8 @@ networks:
   coso-server_vivosmart-coso-server-network:
     external: true
   valeriamattia3d_default:
+    external: true
+  raspi_ftp_for_backup_rasp_sftp-network:
     external: true
 
 volumes:
