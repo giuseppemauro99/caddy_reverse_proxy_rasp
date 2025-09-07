@@ -1,5 +1,5 @@
 # Blocco per i domini autorizzati
-ftp.giusepperasp.giuseppemauro.ovh{
+ftp.giusepperasp.giuseppemauro.ovh {
      tls giuseppemauro99@gmail.com {
         protocols tls1.2 tls1.3
     }
