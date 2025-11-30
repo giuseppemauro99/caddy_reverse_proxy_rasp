@@ -33,6 +33,8 @@ networks:
     external: true
   raspi_ftp_for_backup_rasp_sftp-network:
     external: true
+  valeriamattia3d_custommodellizator_default:
+    external: true
 
 volumes:
   caddy_data:
