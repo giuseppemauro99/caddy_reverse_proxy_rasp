@@ -19,6 +19,36 @@ sftp.giusepperasp.giuseppemauro.ovh {
     reverse_proxy rasp_sftp:2022
 }
 
+portainer.giusepperasp.giuseppemauro.ovh {
+     log {
+          output stdout      # <-- il valore predefinito che ti ho proposto
+          format console     # o "json"
+     }
+
+     # Blocca accesso a .git e file sensibili
+    @forbidden {
+        path /.git*
+        path /.env
+        path /composer.lock
+        path /package-lock.json
+        path /*.pem
+        path /*.key
+    }
+    respond @forbidden 404
+
+     #Evito indicizzazione tratttandosi di un ambiente ALFA
+     header {
+          X-Robots-Tag "noindex, nofollow"
+     }
+
+	tls giuseppemauro99@gmail.com {
+		protocols tls1.2 tls1.3
+	}
+
+	# tutto il traffico su HTTPS (da browser e da API)
+	reverse_proxy reverse_proxy portainer:9000
+}
+
 ciaosonoungattino.giuseppemauro.ovh, ciaosonoungattino.ovh {
     tls giuseppemauro99@gmail.com {
         protocols tls1.2 tls1.3

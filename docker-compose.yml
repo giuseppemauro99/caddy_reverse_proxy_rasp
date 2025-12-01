@@ -24,6 +24,7 @@ services:
       - valeriamattia3d_default
       - raspi_ftp_for_backup_rasp_sftp-network
       - valeriamattia3d_custommodellizator_default
+      - portainer_net
 
 networks:
   raspi_ig_publisher_ciaosonoungattino-network: #aggiungere la rete per ogni container da servire
@@ -35,6 +36,8 @@ networks:
   raspi_ftp_for_backup_rasp_sftp-network:
     external: true
   valeriamattia3d_custommodellizator_default:
+    external: true
+  portainer_net:
     external: true
 
 volumes:
