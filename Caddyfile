@@ -46,7 +46,7 @@ portainer.giusepperasp.giuseppemauro.ovh {
 	}
 
 	# tutto il traffico su HTTPS (da browser e da API)
-	reverse_proxy reverse_proxy portainer:9000
+	reverse_proxy portainer:9000
 }
 
 ciaosonoungattino.giuseppemauro.ovh, ciaosonoungattino.ovh {
