@@ -210,7 +210,7 @@ modellizer-valeriamattia3d.giuseppemauro.ovh {
 	reverse_proxy valeriamattia3d-custommodellizator-web:80
 }
 
-cutefleximaker.com {
+cutefleximaker.com, www.cutefleximaker.com {
      log {
           output stdout      # <-- il valore predefinito che ti ho proposto
           format console     # o "json"
