@@ -19,20 +19,20 @@ services:
       - caddy_config:/config
       - ./static:/usr/share/caddy
     networks:
-      - raspi_ig_publisher_ciaosonoungattino-network
+      #- raspi_ig_publisher_ciaosonoungattino-network
       - coso-server_vivosmart-coso-server-network
-      - valeriamattia3d_default
+      #- valeriamattia3d_default
       - raspi_ftp_for_backup_rasp_sftp-network
       - valeriamattia3d_custommodellizator_default
       - portainer_net
 
 networks:
-  raspi_ig_publisher_ciaosonoungattino-network: #aggiungere la rete per ogni container da servire
-    external: true
+  #raspi_ig_publisher_ciaosonoungattino-network: #aggiungere la rete per ogni container da servire
+  #  external: true
   coso-server_vivosmart-coso-server-network:
     external: true
-  valeriamattia3d_default:
-    external: true
+  #valeriamattia3d_default:
+  #  external: true
   raspi_ftp_for_backup_rasp_sftp-network:
     external: true
   valeriamattia3d_custommodellizator_default:
