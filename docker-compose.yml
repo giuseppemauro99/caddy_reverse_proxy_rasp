@@ -24,6 +24,7 @@ services:
       #- valeriamattia3d_default
       - raspi_ftp_for_backup_rasp_sftp-network
       - valeriamattia3d_custommodellizator_default
+      - clickermaker_default
       - portainer_net
 
 networks:
@@ -36,6 +37,8 @@ networks:
   raspi_ftp_for_backup_rasp_sftp-network:
     external: true
   valeriamattia3d_custommodellizator_default:
+    external: true
+  clickermaker_default:
     external: true
   portainer_net:
     external: true
